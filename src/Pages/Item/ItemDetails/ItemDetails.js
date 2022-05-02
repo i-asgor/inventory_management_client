@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 const ItemDetails = () => {
     const {id} = useParams();
     const [item, setItem] = useState({});
-    const [quantity, setQuantity] = useState(item.quantity);
+    const [value, setValue] = useState(item.quantity);
 
     useEffect(()=>{
         const url = `http://localhost:5000/inventory/${id}`;
@@ -19,7 +19,8 @@ const ItemDetails = () => {
 
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
-        // console.log(data);
+        console.log(data);
+        setItem(data);
         const url = `http://localhost:5000/inventory/${id}`;
         fetch(url,{
             method:'PUT',
@@ -37,9 +38,12 @@ const ItemDetails = () => {
     }
 
     const delivered = () =>{
-        const reduceNumber = item.quantity;
-        const resQuantity = reduceNumber-1;
-        console.log(resQuantity)
+        let updateItem = item;
+        if(updateItem.quantity > 0){            
+            updateItem.quantity = updateItem.quantity - 1;
+        }
+        setValue(updateItem.quantity)
+        console.log(updateItem.quantity)
     }
     return (
         <div className='text-center py-5 container'>
