@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import Loading from '../../Shared/Loading/Loading';
 
 const Register = () => {
     const [checked, setChecked] = useState(false);
@@ -13,10 +14,20 @@ const Register = () => {
         user,
         loading,
         error,
-      ] = useCreateUserWithEmailAndPassword(auth);
+      ] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification: true});
+    
+    const [updateProfile, updating, error1] = useUpdateProfile(auth);
 
-    if(user){
-        navigate('/home')
+    if(loading || updating){
+        return <Loading></Loading>;
+    }
+
+    let customError;
+
+    if (error ||error1) {
+        customError=  <div>
+            <p className='text-danger'>Error: {error.message}</p>
+        </div>
     }
 
     const handleRegister = async(e) => {
@@ -25,10 +36,12 @@ const Register = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
 
-        createUserWithEmailAndPassword(email,password);
-        
-       
+        await createUserWithEmailAndPassword(email,password);
+        await updateProfile({displayName:name})
 
+        if(user){
+            navigate('/home')
+        }
 
     }
     return (
@@ -56,7 +69,8 @@ const Register = () => {
                 <Button disabled={!checked} variant="primary" type="submit">
                     SignUp
                 </Button>
-            </Form>            
+            </Form>
+            {customError}            
             <p>Already Have an Account? <Link className='text-primary pe-auto text-decoration-none' to='/login'>Please Login</Link></p>
         </div>
     );
