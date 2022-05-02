@@ -5,6 +5,7 @@ import auth from '../../../firebase.init';
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Social from '../Social/Social';
 
 const Login = () => {
     const emailRef = useRef('');
@@ -71,6 +72,7 @@ const Login = () => {
             {customError}
             <p>New to Inventory Management? <Link className='text-primary pe-auto text-decoration-none' to='/register'>Please SignUp</Link></p>
             <p>Forget Your Password? <button className='btn btn-link text-primary pe-auto text-decoration-none'  onClick={resetPassword}>Reset Password</button></p>
+            <Social></Social>
             <ToastContainer/>
         </div>
     );
