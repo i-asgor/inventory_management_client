@@ -14,15 +14,7 @@ const Header = () => {
         signOut(auth)
     }
 
-    const manageItem = () => {
-        navigate('/manageitem')
-    }
-    const myItem = () => {
-        navigate('/myitem')
-    }
-    const addItem = () => {
-        navigate('/additem')
-    }
+    
     return (
         <>
            <Navbar collapseOnSelect expand="lg" sticky='top' bg="dark" variant="dark">
@@ -42,9 +34,9 @@ const Header = () => {
                 {
                     user?
                     <>
-                    <button className="btn btn-link text-white text-decoration-none" onClick={manageItem}>Manage Items</button>
-                    <button className="btn btn-link text-white text-decoration-none" onClick={addItem}>Add Item</button>
-                    <button className="btn btn-link text-white text-decoration-none" onClick={myItem}>My Items</button>
+                    <Nav.Link as={Link} to="/manageitem">Manage Items</Nav.Link>
+                    <Nav.Link as={Link} to="/additem">Add Item</Nav.Link>
+                    <Nav.Link as={Link} to="/myitem">My Items</Nav.Link>
                     <button onClick={handleSignOut} className="btn btn-link text-white text-decoration-none">Logout</button>
                     </>
                     :

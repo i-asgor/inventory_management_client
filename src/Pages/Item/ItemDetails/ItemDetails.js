@@ -30,7 +30,6 @@ const ItemDetails = () => {
         })
         .then(res=>res.json())
         .then(output => {
-            setItem(output)
             console.log(output);
             // setQuantity(output);
             window.alert("quantity Updated Successfully!!");
