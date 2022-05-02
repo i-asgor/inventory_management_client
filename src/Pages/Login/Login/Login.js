@@ -1,8 +1,10 @@
 import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const emailRef = useRef('');
@@ -16,9 +18,19 @@ const Login = () => {
         error,
       ] = useSignInWithEmailAndPassword(auth);
 
+    const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
+
 
     if(user){
         navigate("/home");
+    }
+
+    let customError;
+
+     if (error) {
+        customError=  <div>
+            <p className='text-danger'>Error: {error.message}</p>
+          </div>
     }
 
      const HandleLoginForm = e =>{
@@ -26,6 +38,17 @@ const Login = () => {
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
         signInWithEmailAndPassword(email,password);
+    }
+
+    const resetPassword = () => {
+        const email = emailRef.current.value;
+        if(email){
+            sendPasswordResetEmail(email);
+            toast('Sent email');
+        }
+        else{
+            toast('Please Enter Your Email')
+        }
     }
 
     return (
@@ -45,6 +68,10 @@ const Login = () => {
                     Login
                 </Button>
             </Form>
+            {customError}
+            <p>New to Inventory Management? <Link className='text-primary pe-auto text-decoration-none' to='/register'>Please SignUp</Link></p>
+            <p>Forget Your Password? <button className='btn btn-link text-primary pe-auto text-decoration-none'  onClick={resetPassword}>Reset Password</button></p>
+            <ToastContainer/>
         </div>
     );
 };
