@@ -1,9 +1,75 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Button, Card } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
 const ItemDetails = () => {
+    const {id} = useParams();
+    const [item, setItem] = useState({});
+    const [quantity, setQuantity] = useState({});
+
+    useEffect(()=>{
+        const url = `http://localhost:5000/inventory/${id}`;
+        fetch(url)
+        .then(res=>res.json())
+        .then(data => setItem(data))
+
+    },[])
+
+
+    const { register, handleSubmit } = useForm();
+    const onSubmit = data => {
+        console.log(data);
+        const url = `http://localhost:5000/inventory/${id}`;
+        fetch(url,{
+            method:'PUT',
+            headers:{
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res=>res.json())
+        .then(output => {
+            console.log(output);
+            // setItem(output);
+            window.alert("quantity Updated Successfully!!");
+        })
+    }
+
+    const delivered = () =>{
+        const reduceQuantity = (item.quantity)-1;
+        setQuantity(reduceQuantity)
+        console.log(reduceQuantity)
+    }
     return (
-        <div>
-            <h1>Item Details</h1>
+        <div className='text-center py-5 container'>
+            <div className="row">
+                <div className="col-md-6 col-sm-12  mx-auto">
+                <Card>
+                    <Card.Header as="h5">ID: {id}</Card.Header>
+                    <Card.Body>
+                        <Card.Title>Name:{item.name}</Card.Title>
+                        <Card.Text>
+                            Price: {item.price}
+                        </Card.Text>
+                        <Card.Text>
+                            Quantity: {item.quantity}
+                        </Card.Text>
+                        <Card.Text>
+                            Supplier Name: {item.supplier_name}
+                        </Card.Text>
+                        <Card.Text>
+                            {item.description}
+                        </Card.Text>
+                        <Button variant="primary" onClick={delivered}>Delivered</Button>
+                    </Card.Body>
+                    </Card>
+                    <form className='d-flex flex-column' onSubmit={handleSubmit(onSubmit)}>
+                        <input className='mb-2' placeholder='Quantity' type="number" {...register("quantity")} />
+                        <input type="submit" value="update Item" />
+                    </form>
+                </div>
+            </div>
         </div>
     );
 };
