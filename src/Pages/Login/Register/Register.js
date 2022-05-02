@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 
 const Register = () => {
-
+    const [checked, setChecked] = useState(false);
     const navigate = useNavigate();
 
     const [
@@ -49,11 +49,15 @@ const Register = () => {
                     <Form.Control  type="password" name='password' placeholder="Password" required/>
                 </Form.Group>
 
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                    <Form.Check onClick={()=> setChecked(!checked)} type="checkbox" name='terms' label="Accept Electronics Inventory Management Terms and Conditions" />
+                </Form.Group>
                 
-                <Button variant="primary" type="submit">
+                <Button disabled={!checked} variant="primary" type="submit">
                     SignUp
                 </Button>
-            </Form>
+            </Form>            
+            <p>Already Have an Account? <Link className='text-primary pe-auto text-decoration-none' to='/login'>Please Login</Link></p>
         </div>
     );
 };
