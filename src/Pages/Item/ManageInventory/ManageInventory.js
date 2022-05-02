@@ -1,10 +1,13 @@
 import React from 'react';
-import { Row } from 'react-bootstrap';
+import { Button, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import CustomItem from '../../../Hooks/CustomItem';
 import ManageItem from '../ManageItem/ManageItem';
 
 const ManageInventory = () => {
     const [items, setItems] = CustomItem([]);
+    const navigate = useNavigate();
+
     const itemDelete = id =>{
         const proceed = window.confirm('Are You Sure?')
         if(proceed){
@@ -21,9 +24,14 @@ const ManageInventory = () => {
         }
         // console.log(id)
     }
+
+    const addItem = () =>{
+        navigate('/additem');
+    }
     return (
         <div className='container py-3'>
             <h1 className='text-primary text-center'>Items</h1>
+            <Button className='btn btn-success my-2' onClick={addItem}>Add New Item</Button>
             <Row xs={1} md={3} className="g-4">
                 {
                     items.map(item => <ManageItem key={item._id} item={item} itemDelete={itemDelete}></ManageItem>)
