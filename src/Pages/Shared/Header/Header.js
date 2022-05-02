@@ -1,9 +1,28 @@
+import { signOut } from 'firebase/auth';
 import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import auth from '../../../firebase.init';
 import logo from '../../../images/logo.png';
 
 const Header = () => {
+    const [user] =useAuthState(auth);
+    const navigate = useNavigate();
+
+    const handleSignOut = () =>{
+        signOut(auth)
+    }
+
+    const manageItem = () => {
+        navigate('/manageitem')
+    }
+    const myItem = () => {
+        navigate('/myitem')
+    }
+    const addItem = () => {
+        navigate('/additem')
+    }
     return (
         <>
            <Navbar collapseOnSelect expand="lg" sticky='top' bg="dark" variant="dark">
@@ -20,7 +39,17 @@ const Header = () => {
                 <Nav.Link as={Link} to="/blogs">Blogs</Nav.Link>
                 </Nav>
                 <Nav>
-                    <Nav.Link as={Link} to="/login">Login</Nav.Link>                
+                {
+                    user?
+                    <>
+                    <button className="btn btn-link text-white text-decoration-none" onClick={manageItem}>Manage Items</button>
+                    <button className="btn btn-link text-white text-decoration-none" onClick={addItem}>Add Item</button>
+                    <button className="btn btn-link text-white text-decoration-none" onClick={myItem}>My Items</button>
+                    <button onClick={handleSignOut} className="btn btn-link text-white text-decoration-none">Logout</button>
+                    </>
+                    :
+                    <Nav.Link as={Link} to="/login">Login</Nav.Link>
+                }              
                 </Nav>
             </Navbar.Collapse>
             </Container>
