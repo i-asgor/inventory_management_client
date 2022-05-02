@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 const ItemDetails = () => {
     const {id} = useParams();
     const [item, setItem] = useState({});
-    const [quantity, setQuantity] = useState({});
+    const [quantity, setQuantity] = useState(item.quantity);
 
     useEffect(()=>{
         const url = `http://localhost:5000/inventory/${id}`;
@@ -19,7 +19,7 @@ const ItemDetails = () => {
 
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
-        console.log(data);
+        // console.log(data);
         const url = `http://localhost:5000/inventory/${id}`;
         fetch(url,{
             method:'PUT',
@@ -30,16 +30,17 @@ const ItemDetails = () => {
         })
         .then(res=>res.json())
         .then(output => {
+            setItem(output)
             console.log(output);
-            // setItem(output);
+            // setQuantity(output);
             window.alert("quantity Updated Successfully!!");
         })
     }
 
     const delivered = () =>{
-        const reduceQuantity = (item.quantity)-1;
-        setQuantity(reduceQuantity)
-        console.log(reduceQuantity)
+        const reduceNumber = item.quantity;
+        const resQuantity = reduceNumber-1;
+        console.log(resQuantity)
     }
     return (
         <div className='text-center py-5 container'>
@@ -65,8 +66,8 @@ const ItemDetails = () => {
                     </Card.Body>
                     </Card>
                     <form className='d-flex flex-column' onSubmit={handleSubmit(onSubmit)}>
-                        <input className='mb-2' placeholder='Quantity' type="number" {...register("quantity")} />
-                        <input type="submit" value="update Item" />
+                        <input className='mb-2' placeholder='Restock Item' type="number" {...register("quantity")} />
+                        <input type="submit" value="Restock Item Quantity" />
                     </form>
                 </div>
             </div>
