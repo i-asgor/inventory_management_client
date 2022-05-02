@@ -9,6 +9,8 @@ import NotFound from './Pages/NotFound/NotFound';
 import Register from './Pages/Login/Register/Register';
 import RequireAuth from './Pages/Login/RequireAuth/RequireAuth';
 import ItemDetails from './Pages/Item/ItemDetails/ItemDetails';
+import MyItem from './Pages/Item/MyItem/MyItem';
+import ManageInventory from './Pages/Item/ManageInventory/ManageInventory';
 
 function App() {
   return (
@@ -23,6 +25,16 @@ function App() {
         <Route path='/inventory/:id' element={
           <RequireAuth>
             <ItemDetails />
+          </RequireAuth>
+        }></Route>
+        <Route path='/manageitem' element={
+          <RequireAuth>
+            <ManageInventory />
+          </RequireAuth>
+        }></Route>
+        <Route path='/myitem' element={
+          <RequireAuth>
+            <MyItem />
           </RequireAuth>
         }></Route>
         <Route path='*' element={<NotFound />}></Route>
