@@ -20,6 +20,7 @@ const ItemDetails = () => {
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
         console.log(data);
+        console.log(item)
         setItem(data);
         const url = `http://localhost:5000/inventory/${id}`;
         fetch(url,{
@@ -31,7 +32,7 @@ const ItemDetails = () => {
         })
         .then(res=>res.json())
         .then(output => {
-            console.log(output);
+            // console.log(output);
             // setQuantity(output);
             window.alert("quantity Updated Successfully!!");
         })

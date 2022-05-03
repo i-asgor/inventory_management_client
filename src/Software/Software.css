@@ -1,0 +1,5 @@
+.card-lift--hover:hover {
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+    transition: all .15s ease;
+}
