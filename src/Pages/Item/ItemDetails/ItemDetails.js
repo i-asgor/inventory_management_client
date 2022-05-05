@@ -19,9 +19,11 @@ const ItemDetails = () => {
 
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
-        console.log(data);
-        console.log(item)
-        setItem(data);
+        const newItem = parseInt(item.quantity) + parseInt(data.quantity);
+        
+        data = {'quantity':newItem};
+        console.log(newItem)
+        setItem(item);
         const url = `http://localhost:5000/inventory/${id}`;
         fetch(url,{
             method:'PUT',
@@ -35,17 +37,34 @@ const ItemDetails = () => {
             // console.log(output);
             // setQuantity(output);
             window.alert("quantity Updated Successfully!!");
-        })
+        });
     }
 
-    const delivered = () =>{
+    const delivered = (id) =>{
         let updateItem = item;
         if(updateItem.quantity > 0){            
             updateItem.quantity = updateItem.quantity - 1;
         }
-        setValue(updateItem.quantity)
-        console.log(updateItem.quantity)
+        const data = {'quantity':updateItem.quantity};
+        setValue(updateItem.quantity);
+
+        const url = `http://localhost:5000/inventory/${id}`;
+        fetch(url,{
+            method:'PUT',
+            headers:{
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res=>res.json())
+        .then(output => {
+            // console.log(output);
+            // setQuantity(output);
+            window.alert("quantity decrease Successfully!!");
+        });
     }
+
+
     return (
         <div className='text-center py-5 container'>
             <div className="row">
@@ -66,7 +85,7 @@ const ItemDetails = () => {
                         <Card.Text>
                             {item.description}
                         </Card.Text>
-                        <Button variant="primary" onClick={delivered}>Delivered</Button>
+                        <Button variant="primary" onClick={()=>delivered(id)}>Delivered</Button>
                     </Card.Body>
                     </Card>
                     <form className='d-flex flex-column' onSubmit={handleSubmit(onSubmit)}>
