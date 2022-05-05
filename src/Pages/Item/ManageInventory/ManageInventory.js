@@ -11,7 +11,7 @@ const ManageInventory = () => {
     const itemDelete = id =>{
         const proceed = window.confirm('Are You Sure?')
         if(proceed){
-            const url = `http://localhost:5000/inventory/${id}`;
+            const url = `https://cryptic-falls-85122.herokuapp.com/inventory/${id}`;
             fetch(url,{
                 method: 'DELETE'
             })
