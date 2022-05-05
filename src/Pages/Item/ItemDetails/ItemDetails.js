@@ -76,6 +76,7 @@ const ItemDetails = () => {
                     <Card.Header as="h5">ID: {id}</Card.Header>
                     <Card.Body>
                         <Card.Title>Name:{item.name}</Card.Title>
+                        <Card.Img variant="top" src={item.picture} style={{"width":"30%"}} />
                         <Card.Text>
                             Price: {item.price}
                         </Card.Text>
@@ -88,7 +89,10 @@ const ItemDetails = () => {
                         <Card.Text>
                             {item.description}
                         </Card.Text>
-                        <Button variant="primary" onClick={()=>delivered(id)}>Delivered</Button>
+                        <Button variant="primary" onClick={()=>delivered(id)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" style={{'height':'31px'}} viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clipRule="evenodd" />
+                        </svg>Delivered</Button>
                     </Card.Body>
                     </Card>
                     <form className='d-flex flex-column' onSubmit={handleSubmit(onSubmit)}>
