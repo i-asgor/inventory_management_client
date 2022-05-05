@@ -19,11 +19,14 @@ const ItemDetails = () => {
 
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
-        const newItem = parseInt(item.quantity) + parseInt(data.quantity);
+        const newItem = parseInt(item.quantity) + parseInt(data.quantity);        
+        console.log(newItem)
         
         data = {'quantity':newItem};
-        console.log(newItem)
-        setItem(item);
+        const {quantity,...rest} = item;
+        const updateItem = {...data, ...rest}
+        console.log(updateItem)
+        setItem(updateItem);
         const url = `https://cryptic-falls-85122.herokuapp.com/inventory/${id}`;
         fetch(url,{
             method:'PUT',
