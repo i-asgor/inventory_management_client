@@ -13,19 +13,17 @@ const ItemDetails = () => {
         fetch(url)
         .then(res=>res.json())
         .then(data => setItem(data))
-
-    },[])
+    },[id])
 
 
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
         const newItem = parseInt(item.quantity) + parseInt(data.quantity);        
-        console.log(newItem)
+        // console.log(newItem)
         
         data = {'quantity':newItem};
         const {quantity,...rest} = item;
         const updateItem = {...data, ...rest}
-        console.log(updateItem)
         setItem(updateItem);
         const url = `https://cryptic-falls-85122.herokuapp.com/inventory/${id}`;
         fetch(url,{
@@ -71,7 +69,7 @@ const ItemDetails = () => {
     return (
         <div className='text-center py-5 container'>
             <div className="row">
-                <div className="col-md-6 col-sm-12  mx-auto">
+                <div className="col-md-8 col-sm-12  mx-auto">
                 <Card>
                     <Card.Header as="h5">ID: {id}</Card.Header>
                     <Card.Body>

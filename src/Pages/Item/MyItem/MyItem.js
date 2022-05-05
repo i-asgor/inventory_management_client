@@ -6,7 +6,7 @@ import CustomItem from '../../../Hooks/CustomItem';
 import ManageItem from '../ManageItem/ManageItem';
 
 const MyItem = () => {
-    const [user, loading] = useAuthState(auth);
+    const [user] = useAuthState(auth);
     // console.log(user)
     const [items, setItems] = CustomItem([]);
     const itemDelete = id =>{

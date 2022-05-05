@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import auth from '../../../firebase.init';
 
 const AddItem = () => {
-    const [user, loading] = useAuthState(auth);
+    const [user] = useAuthState(auth);
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
         console.log(data);
