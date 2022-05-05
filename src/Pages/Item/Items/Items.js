@@ -12,7 +12,7 @@ const Items = () => {
         navigate('/manageitem');
     }
     return (
-        <div className='container py-3'>
+        <div className='container my-3'>
             <h1 className='text-primary text-center'>Items</h1>
             <Row xs={1} md={3} className="g-4">
                 {
