@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Row } from 'react-bootstrap';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
@@ -8,7 +9,23 @@ import ManageItem from '../ManageItem/ManageItem';
 const MyItem = () => {
     const [user] = useAuthState(auth);
     // console.log(user)
-    const [items, setItems] = CustomItem([]);
+    // const [items, setItems] = CustomItem([]);
+    const [items, setItems] = useState([]);
+
+    useEffect(()=>{        
+        const getItem = async () =>{
+            const email = user.email;
+            const url = `https://cryptic-falls-85122.herokuapp.com/myitem?email=${email}`;
+            const {data} = await axios.get(url,{
+                headers:{
+                    authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
+            setItems(data);
+        }
+        getItem();
+    },[user])
+
     const itemDelete = id =>{
         const proceed = window.confirm('Are You Sure?')
         if(proceed){

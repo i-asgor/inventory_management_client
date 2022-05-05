@@ -1,17 +1,21 @@
 import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Social from '../Social/Social';
 import Loading from '../../Shared/Loading/Loading';
+import axios from 'axios';
 
 const Login = () => {
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const navigate = useNavigate();
+
+    const location = useLocation();
+    let from = location.state?.from?.pathname || "/";
 
     const [
         signInWithEmailAndPassword,
@@ -29,7 +33,7 @@ const Login = () => {
 
 
     if(user){
-        navigate("/home");
+        // navigate(from, {replace:true});
     }
 
     let customError;
@@ -40,11 +44,14 @@ const Login = () => {
           </div>
     }
 
-     const HandleLoginForm = e =>{
+     const HandleLoginForm = async e =>{
         e.preventDefault();
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
-        signInWithEmailAndPassword(email,password);
+        await signInWithEmailAndPassword(email,password);
+        const {data} = await axios.post('http://localhost:5000/login',{email});
+        localStorage.setItem('accessToken', data.accessToken);
+        navigate(from, {replace:true});
     }
 
     const resetPassword = () => {
