@@ -4,7 +4,7 @@ const CustomItem = ()=> {
     const [items, setItems] = useState([]);
 
     useEffect(() =>{
-        fetch(`http://127.0.0.1:5000/inventory`)
+        fetch(`https://cryptic-falls-85122.herokuapp.com//inventory`)
         .then(res => res.json())
         .then(data => setItems(data))
     },[])
