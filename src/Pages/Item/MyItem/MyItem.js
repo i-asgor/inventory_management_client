@@ -1,13 +1,15 @@
 import axios from 'axios';
+import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { Row } from 'react-bootstrap';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
-import CustomItem from '../../../Hooks/CustomItem';
 import ManageItem from '../ManageItem/ManageItem';
 
 const MyItem = () => {
     const [user] = useAuthState(auth);
+    const navigate = useNavigate();
     // console.log(user)
     // const [items, setItems] = CustomItem([]);
     const [items, setItems] = useState([]);
@@ -15,13 +17,22 @@ const MyItem = () => {
     useEffect(()=>{        
         const getItem = async () =>{
             const email = user.email;
-            const url = `https://cryptic-falls-85122.herokuapp.com/myitem?email=${email}`;
-            const {data} = await axios.get(url,{
-                headers:{
-                    authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            const url = `http://localhost:5000/myitem?email=${email}`;
+            try{
+                const {data} = await axios.get(url,{
+                    headers:{
+                        authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    }
+                })
+                setItems(data);
+            }
+            catch(error){
+                console.log(error.message);
+                if(error.response.status === 401 || error.response.status === 403){
+                    signOut(auth);
+                    navigate('/login');
                 }
-            })
-            setItems(data);
+            }
         }
         getItem();
     },[user])
