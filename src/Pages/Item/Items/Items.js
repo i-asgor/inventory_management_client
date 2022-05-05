@@ -5,7 +5,7 @@ import CustomItem from '../../../Hooks/CustomItem';
 import Item from '../Item/Item';
 
 const Items = () => {
-    const [items, setItems] = CustomItem([]);
+    const [items] = CustomItem([]);
     const navigate = useNavigate();
 
     const InventoryManage = () =>{
