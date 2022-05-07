@@ -1,11 +1,13 @@
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 
 const AddItem = () => {
     const [user] = useAuthState(auth);
     const { register, handleSubmit } = useForm();
+    const navigate = useNavigate();
     const onSubmit = data => {
         console.log(data);
         const url = `https://cryptic-falls-85122.herokuapp.com/inventory`;
@@ -19,6 +21,7 @@ const AddItem = () => {
         .then(res=>res.json())
         .then(output => {
             console.log(output);
+            navigate('/manageitem');
         })
     }
     return (
