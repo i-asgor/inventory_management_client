@@ -64,6 +64,7 @@ const ItemDetails = () => {
             window.alert("quantity decrease Successfully!!");
         });
     }
+    
 
 
     return (
@@ -76,9 +77,9 @@ const ItemDetails = () => {
                 </div>
                 <div className="col-md-6 col-sm-12">
                 <Card>
-                    <Card.Header as="h5">ID: {id}</Card.Header>
+                    <Card.Header as="h5">{item.name}</Card.Header>
                     <Card.Body>
-                        <Card.Title>Name:{item.name}</Card.Title>
+                        <Card.Title>ID: {id}</Card.Title>
                         
                         <Card.Text>
                             Price: {item.price}
@@ -97,10 +98,10 @@ const ItemDetails = () => {
                         <path fillRule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clipRule="evenodd" />
                         </svg>Delivered</Button>
                     </Card.Body>
-                    <form className='d-flex flex-column' onSubmit={handleSubmit(onSubmit)}>
-                        <input className='mb-2' placeholder='Restock Item' type="number" {...register("quantity")} />
-                        <input type="submit" value="Restock Item Quantity" />
-                    </form>
+                        <form className='d-flex flex-column' onSubmit={handleSubmit(onSubmit)}>
+                            <input className='mb-2' placeholder='Restock Item' type="number" {...register("quantity")} />
+                            <input type="submit" value="Restock Item Quantity" />
+                        </form>
                     </Card>
                    
                 </div>
