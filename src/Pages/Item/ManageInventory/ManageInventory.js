@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import CustomItem from '../../../Hooks/CustomItem';
+import Loading from '../../Shared/Loading/Loading';
 import ManageItem from '../ManageItem/ManageItem';
 
 const ManageInventory = () => {
@@ -38,6 +39,7 @@ const ManageInventory = () => {
                 Add New Item</Button>
             <Row xs={1} md={2} lg={3} className="g-4">
                 {
+                    ((items.length) === 0)?<Loading></Loading>:
                     items.map(item => <ManageItem key={item._id} item={item} itemDelete={itemDelete}></ManageItem>)
                 }
             </Row>

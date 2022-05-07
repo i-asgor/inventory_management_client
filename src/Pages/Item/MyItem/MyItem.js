@@ -5,6 +5,7 @@ import { Row } from 'react-bootstrap';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import Loading from '../../Shared/Loading/Loading';
 import ManageItem from '../ManageItem/ManageItem';
 
 const MyItem = () => {
@@ -58,6 +59,7 @@ const MyItem = () => {
             <h1 className='text-primary text-center'>My Items</h1>
             <Row xs={1} md={3} className="g-4">
                 {
+                    ((items.length) === 0)?<Loading></Loading>:
                     items.filter((item)=> {return item.email === user.email}).map(item => <ManageItem key={item._id} item={item} itemDelete={itemDelete}></ManageItem>)
                 }
             </Row>
