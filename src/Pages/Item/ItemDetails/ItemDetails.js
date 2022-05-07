@@ -68,16 +68,16 @@ const ItemDetails = () => {
 
 
     return (
-        <div className='text-center py-5 container'>
+        <div className='text-left py-5 container'>
             <div className="row">
-                <div className="col-md-6 col-sm-12">                    
+                <div className="col-lg-6 col-md-4 col-sm-12">                    
                     <Card className='border-0'>
                         <Card.Img variant="top" src={item.picture} />
                     </Card>
                 </div>
-                <div className="col-md-6 col-sm-12">
+                <div className="col-lg-6 col-md-8 col-sm-12">
                 <Card>
-                    <Card.Header as="h5">{item.name}</Card.Header>
+                    <Card.Header as="h1">{item.name}</Card.Header>
                     <Card.Body>
                         <Card.Title>ID: {id}</Card.Title>
                         
