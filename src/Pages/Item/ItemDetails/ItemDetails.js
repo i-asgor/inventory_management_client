@@ -69,12 +69,17 @@ const ItemDetails = () => {
     return (
         <div className='text-center py-5 container'>
             <div className="row">
-                <div className="col-md-8 col-sm-12  mx-auto">
+                <div className="col-md-6 col-sm-12">                    
+                    <Card className='border-0'>
+                        <Card.Img variant="top" src={item.picture} />
+                    </Card>
+                </div>
+                <div className="col-md-6 col-sm-12">
                 <Card>
                     <Card.Header as="h5">ID: {id}</Card.Header>
                     <Card.Body>
                         <Card.Title>Name:{item.name}</Card.Title>
-                        <Card.Img variant="top" src={item.picture} style={{"width":"30%"}} />
+                        
                         <Card.Text>
                             Price: {item.price}
                         </Card.Text>
@@ -92,11 +97,12 @@ const ItemDetails = () => {
                         <path fillRule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clipRule="evenodd" />
                         </svg>Delivered</Button>
                     </Card.Body>
-                    </Card>
                     <form className='d-flex flex-column' onSubmit={handleSubmit(onSubmit)}>
                         <input className='mb-2' placeholder='Restock Item' type="number" {...register("quantity")} />
                         <input type="submit" value="Restock Item Quantity" />
                     </form>
+                    </Card>
+                   
                 </div>
             </div>
         </div>
