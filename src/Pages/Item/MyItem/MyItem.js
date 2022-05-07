@@ -17,7 +17,7 @@ const MyItem = () => {
     useEffect(()=>{        
         const getItem = async () =>{
             const email = user.email;
-            const url = `http://localhost:5000/myitem?email=${email}`;
+            const url = `https://cryptic-falls-85122.herokuapp.com/myitem?email=${email}`;
             try{
                 const {data} = await axios.get(url,{
                     headers:{
