@@ -21,7 +21,9 @@ const ManageItem = ({item,itemDelete}) => {
                            Price: {price}
                         </Card.Text>
                         <Card.Text>
-                            Quantity: {quantity}
+                            Quantity: {
+                                 (quantity !== 0)?quantity:"sold Out"
+                            }
                         </Card.Text>
                         <Card.Text>
                             Supplier Name: {supplier_name}
