@@ -47,12 +47,10 @@ const MyItem = () => {
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 const remaining = items.filter(item => item._id !== id);
                 setItems(remaining);
             });
         }
-        console.log(id)
     }
     return (
         <div className='container py-3'>
